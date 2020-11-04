@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+</head>
+<body>
+<h2>User List</h2>
+<div>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>IQ</th>
+        </tr>
+        <tr th:each ="user : ${users}">
+            <td><a th:href="@{/{id}(id=${user.id})}" th:utext="${user.name}"></a></td>
+            <td th:utext="${user.age}"></td>
+            <td th:utext="${user.iq}"></td>
+            <td>
+                <form th:action="@{/edit/{id}(id=${user.id})}" th:object="${user}">
+                    <button type="submit" class="btn btn-outline-danger">Edit</button>
+                </form>
+            </td>
+            <td>
+                <form th:action="@{/delete(id=${user.id})}" th:object="${user}">
+                    <input type="hidden" name="id" th:value="${user.id}">
+                    <button type="submit" class="btn btn-outline-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+    <h2>Add new User</h2>
+    <br/>
+    <form th:action="@{/add}">
+        <button type="submit" class="btn btn-outline-danger">Add new User</button>
+    </form>
+</div>
+</body>
+</html>

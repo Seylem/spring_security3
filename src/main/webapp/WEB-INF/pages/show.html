@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Show user</title>
+</head>
+<body>
+<h2>Show user</h2>
+<div>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>IQ</th>
+        </tr>
+        <tr>
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.age}"></td>
+            <td th:text="${user.iq}"></td>
+        </tr>
+    </table>
+    <br/>
+    <form th:action="@{/user}">
+        <button type="submit" class="btn btn-outline-danger">Back to User List</button>
+    </form>
+</div>
+</body>
+</html>

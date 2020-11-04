@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Add User</title>
+</head>
+<body>
+<h2>Add User</h2>
+<div>
+    <form action="#" th:action="@{/add}" th:object="${user}" method="post">
+        <input type="hidden" th:field="*{id}"/>
+        <input type="text" th:field="*{name}" placeholder="name">
+        <br/>
+        <input type="text" th:field="*{age}" placeholder="age">
+        <br/>
+        <input type="text" th:field="*{iq}" placeholder="iq">
+        <br/>
+        <button type="submit">Add User</button>
+    </form>
+    <br/>
+    <form th:action="@{/}">
+        <button type="submit" class="btn btn-outline-danger">Back to User List</button>
+    </form>
+</div>
+</body>
+</html>
