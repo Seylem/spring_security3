@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 import web.model.Role;
 
@@ -19,32 +20,33 @@ public class User implements UserDetails {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "age")
-    private int age;
-
-    @Column(name = "iq")
-    private int iq;
+    @Column(name = "mail")
+    private String mail;
 
     @Column(name = "password")
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Role> roles;
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    private Set<Role> roles = new HashSet<>();
 
     public User() {
     }
 
-    public User(String name, int age, int iq) {
+    public User(String name, String mail, String password, Set<Role> roles) {
         this.name = name;
-        this.age = age;
-        this.iq = iq;
+        this.mail = mail;
+        this.password = password;
+        this.roles = roles;
     }
 
-    public User(String name, int age, int iq, String password, Set<Role> roles) {
-        this.name = name;
-        this.age = age;
-        this.iq = iq;
-        this.password = password;
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
 
@@ -64,28 +66,16 @@ public class User implements UserDetails {
         this.name = name;
     }
 
-    public int getAge() {
-        return age;
+    public String getMail() {
+        return mail;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setMail(String mail) {
+        this.mail = mail;
     }
 
-    public int getIq() {
-        return iq;
-    }
-
-    public void setIq(int iq) {
-        this.iq = iq;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override
@@ -128,8 +118,7 @@ public class User implements UserDetails {
         return "User{" +
                 "id=" + id +
                 ", name='" + name +
-                ", age=" + age +
-                ", iq=" + iq +
+                ", mail" + mail +
                 '}' + '\'' +
                 "========================================";
     }

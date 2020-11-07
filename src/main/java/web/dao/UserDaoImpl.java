@@ -11,7 +11,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-@Repository
+@Repository("userDao")
 public class UserDaoImpl implements UserDao {
 
     @PersistenceContext
@@ -21,11 +21,13 @@ public class UserDaoImpl implements UserDao {
         return this.entityManager;
     }
 
+    @Transactional
     @Override
     public void addUser(User user) {
         getEntityManager().persist(user);
     }
 
+    @Transactional
     @Override
     public void removeUser(Integer id) {
         getEntityManager().createQuery("delete from User where id=:id")
@@ -33,16 +35,20 @@ public class UserDaoImpl implements UserDao {
                 .executeUpdate();
     }
 
+    @Transactional
     @Override
     public void updateUser(User user) {
         getEntityManager().merge(user);
     }
 
+    @Transactional
     @Override
     public User getUserById(Integer id) {
         return getEntityManager().find(User.class, id);
     }
 
+
+    @Transactional
     @Override
     public List<User> listUsers() {
         return getEntityManager()

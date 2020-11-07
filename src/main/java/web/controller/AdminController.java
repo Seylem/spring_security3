@@ -9,7 +9,9 @@ import web.model.User;
 import web.service.UserService;
 
 @Controller
+@RequestMapping(value = "/admin")
 public class AdminController {
+
     private UserService userService;
 
     @Autowired
@@ -17,53 +19,61 @@ public class AdminController {
         this.userService = userService;
     }
 
+    @GetMapping(value = "/test")
+    public String test() {
+        return "test";
+    }
+
     @GetMapping(value = "/")
     public String getLoginPage() {
         return "login";
     }
 
-    @GetMapping(value = "/admin")
-    public String listUsers(ModelMap model) {
+
+    @GetMapping(value = "/users")
+    public String allUsers(ModelMap model) {
         model.addAttribute("users", userService.listUsers());
-        return "users";
+        return "/users";
     }
 
-//    @GetMapping(value = "/add")
-//    public String addUser(Model model) {
-//        User user = new User();
-//        model.addAttribute("user" ,user);
-//        return "adduser";
-//    }
-//
-//    @PostMapping(value = "/add")
-//    public String addUser(@ModelAttribute("user") User user) {
-//        userService.addUser(user);
-//        return "redirect:/";
-//    }
-//
-//    @GetMapping(value = "/edit/{id}")
-//    public String editUser(ModelMap model, @PathVariable("id") Integer id) {
-//        User user = userService.getUserById(id);
-//        model.addAttribute("user", user);
-//        return "edituser";
-//    }
-//
-//    @PostMapping(value = "/edit")
-//    public String edit(@ModelAttribute("user") User user) {
-//        userService.updateUser(user);
-//        return "redirect:/";
-//    }
-//
-//    @GetMapping("/delete")
-//    public String deleteUserById(@RequestParam("id") Integer id) {
-//        userService.removeUser(id);
-//        return "redirect:/";
-//    }
-//
-//    @GetMapping("/{id}")
-//    public String show(@PathVariable("id") Integer id, ModelMap modelMap) {
-//        modelMap.addAttribute("user", userService.getUserById(id));
-//        return "/show";
-//    }
+    @GetMapping(value = "/add")
+    public String addUser(Model model) {
+        model.addAttribute("allRoles", userService.getAllRoles());
+        User user = new User();
+        model.addAttribute("user", user);
+        return "/adduser";
+    }
+
+    @PostMapping(value = "/add")
+    public String addUser(@ModelAttribute("user") User user) {
+        userService.addUser(user);
+        return "redirect:/admin/users";
+    }
+
+    @GetMapping(value = "/edit/{id}")
+    public String editUser(ModelMap model, @PathVariable("id") Integer id) {
+        model.addAttribute("allRoles", userService.getAllRoles());
+        User user = userService.getUserById(id);
+        model.addAttribute("user", user);
+        return "/edituser";
+    }
+
+    @PostMapping(value = "/edit")
+    public String edit(@ModelAttribute("user") User user) {
+        userService.updateUser(user);
+        return "redirect:/admin/users";
+    }
+
+    @GetMapping("/delete")
+    public String deleteUserById(@RequestParam("id") Integer id) {
+        userService.removeUser(id);
+        return "redirect:/admin/users";
+    }
+
+    @GetMapping("/{id}")
+    public String show(@PathVariable("id") Integer id, ModelMap modelMap) {
+        modelMap.addAttribute("user", userService.getUserById(id));
+        return "/show/";
+    }
 
 }

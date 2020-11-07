@@ -15,13 +15,16 @@
         </tr>
         <tr>
             <td th:text="${user.name}"></td>
-            <td th:text="${user.age}"></td>
-            <td th:text="${user.iq}"></td>
+            <td th:text="${user.mail}"></td>
         </tr>
     </table>
     <br/>
-    <form th:action="@{/user}">
+    <form th:action="@{/user/showusers}">
         <button type="submit" class="btn btn-outline-danger">Back to User List</button>
+    </form>
+    <br/>
+    <form th:action="@{/logout}">
+        <button type="submit" class="btn btn-outline-danger">Logout</button>
     </form>
 </div>
 </body>

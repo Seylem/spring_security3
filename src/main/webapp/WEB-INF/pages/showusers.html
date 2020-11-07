@@ -14,13 +14,15 @@
             <th>IQ</th>
         </tr>
         <tr th:each ="user : ${users}">
-            <td><a th:href="@{/{id}(id=${user.id})}" th:utext="${user.name}"></a></td>
-            <td th:utext="${user.age}"></td>
-            <td th:utext="${user.iq}"></td>
+            <td><a th:href="@{/user/{id}(id=${user.id})}" th:utext="${user.name}"></a></td>
+            <td th:utext="${user.mail}"></td>
         </tr>
     </table>
 
-    <a th:href="@{/logout}"> Logout </a>
+    <br/>
+    <form th:action="@{/logout}">
+        <button type="submit" class="btn btn-outline-danger">Logout</button>
+    </form>
 </div>
 </body>
 </html>

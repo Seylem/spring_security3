@@ -7,20 +7,29 @@
 <body>
 <h2>Edit User</h2>
 <div>
-    <form action="#" th:action="@{/edit}" th:object="${user}" method="post">
+    <form action="#" th:action="@{/admin/edit}" th:object="${user}" method="post">
         <input type="hidden" th:field="*{id}"/>
         <br/>
         <input type="text" th:field="*{name}" placeholder="name">
         <br/>
-        <input type="text" th:field="*{age}" placeholder="age">
+        <input type="text" th:field="*{mail}" placeholder="mail">
         <br/>
-        <input type="text" th:field="*{iq}" placeholder="iq">
+        <input type="text" th:field="*{password}" placeholder="password">
+        <br/>
+        <select multiple name="roles" size="3" th:id="roles" required>
+            <option disabled>Select roles</option>
+            <option th:each="role : ${allRoles}" th:value="${role}" th:text="${role.role}"></option>
+        </select>
         <br/>
         <button type="submit">Edit</button>
     </form>
     <br/>
-    <form th:action="@{/}">
+    <form th:action="@{/admin/users}">
         <button type="submit" class="btn btn-outline-danger">Back to User List</button>
+    </form>
+    <br/>
+    <form th:action="@{/logout}">
+        <button type="submit" class="btn btn-outline-danger">Logout</button>
     </form>
 </div>
 </body>
